@@ -142,4 +142,10 @@ if [ "${HAVE_APACHE2}" -eq 1 ]; then
    service apache2 restart
 fi
 
+iptables-save > /tmp/iptables.backup
+swapfile /tmp/iptables.backup
+iptables-restore < /tmp/iptables.backup
+mv /tmp/iptables.backup /tmp/iptables.backup.`date '+%Y-%m-%d-%H-%M-%S'`
+rm -f /tmp/iptables.backup
+
 echo "*** Done swapping $OLD_IP to $NEW_IP ***";
